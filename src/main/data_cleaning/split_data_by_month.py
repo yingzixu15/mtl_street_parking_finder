@@ -8,8 +8,14 @@ data_path = os.path.join(directory_path, 'data',
                          'signalisation_stationnement_clean.csv')
 df = pd.read_csv(data_path)
 df['DESCRIPTION_RPA'] = df['DESCRIPTION_RPA'].str.lower()
+df['start_month'] = None
+df['start_date'] = None
+df['end_month'] = None
+df['end_date'] = None
+
 months = ['jan', 'fevr', 'mars', 'avr', 'mai',
           'juin', 'juil', 'aout', 'sept', 'oct', 'nov', 'dec']
+last_date_of_months = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 days = ['lun', 'mar.', 'mardi', 'mer', 'jeu', 'ven', 'sam', 'dim']
 numbers_pattern = '[0-9]+'
 
@@ -45,7 +51,7 @@ def get_date_range(input: str) -> dict:
     if len(end_date2) > 0:
         result['end_date'] = int(end_date2)
     else:
-        result['end_date'] = 1
+        result['end_date'] = last_date_of_months[month_indices[1][1]]
     return result
 
 
@@ -57,9 +63,17 @@ for i in df.index:
     row = df.loc[i]
     date_range = get_date_range(str(row['DESCRIPTION_RPA']))
     if date_range['all']:
+        df.at[i, 'start_month'] = 1
+        df.at[i, 'start_date'] = 1
+        df.at[i, 'end_month'] = 12
+        df.at[i, 'end_date'] = 31
         for m in months:
             month_to_sign_dict[m].append(i)
     else:
+        df.at[i, 'start_month'] = date_range['start_month'] + 1
+        df.at[i, 'start_date'] = date_range['start_date']
+        df.at[i, 'end_month'] = date_range['end_month'] + 1
+        df.at[i, 'end_date'] = date_range['end_date']
         for mindex in range(date_range['start_month'], date_range['end_month'] + 1):
             month_to_sign_dict[months[mindex]].append(i)
 
