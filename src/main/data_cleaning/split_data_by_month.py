@@ -80,5 +80,6 @@ for i in df.index:
 for m in months:
     df_month = df.loc[month_to_sign_dict[m]]
     df_month.drop(columns=df_month.columns[0], axis=1, inplace=True)
-    destination_path = os.path.join(directory_path, 'data', f'sign_{m}.csv')
-    df_month.to_csv(destination_path)
+    destination_path = os.path.join(directory_path, 'data', f'sign_{m}.json')
+    df_month.to_json(destination_path, orient='records')
+    
