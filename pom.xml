@@ -53,6 +53,9 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>2.3.0.RELEASE</version>
+				<configuration>
+					<mainClass>com.example.mtl_parking_finder.MtlParkingFinderApplication</mainClass>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
