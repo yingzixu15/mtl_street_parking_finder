@@ -2,10 +2,12 @@ package com.example.mtl_parking_finder.mappers;
 
 import com.example.mtl_parking_finder.model.Sign;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Component
 public class SignMapper implements RowMapper<Sign> {
     @Override
     public Sign mapRow(ResultSet rs, int rowNum) throws SQLException {

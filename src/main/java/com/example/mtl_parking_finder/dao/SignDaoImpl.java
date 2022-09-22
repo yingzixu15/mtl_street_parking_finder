@@ -4,45 +4,73 @@ import com.example.mtl_parking_finder.mappers.SignMapper;
 import com.example.mtl_parking_finder.model.Coordinate;
 import com.example.mtl_parking_finder.model.Sign;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.object.SqlQuery;
+import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
+@Service
 public class SignDaoImpl implements SignDao {
-    private DataSource dataSource;
+    private final SignMapper signMapper;
     private JdbcTemplate jdbcTemplate;
+
+    public SignDaoImpl(SignMapper signMapper) {
+        this.signMapper = signMapper;
+    }
 
     @Override
     public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     @Override
     public List<Sign> listAll() {
-        String stmt = "SELECT * FROM signs";
-        SqlQuery<Sign> sqlQuery = new SqlQuery<>() {
-            @Override
-            protected RowMapper<Sign> newRowMapper(Object[] parameters, Map<?, ?> context) {
-                return new SignMapper();
-            }
-        };
-        sqlQuery.setDataSource(dataSource);
-        sqlQuery.setSql(stmt);
-        return sqlQuery.execute();
+        final String stmt = "SELECT * FROM signs";
+        return jdbcTemplate.query(stmt, signMapper);
     }
 
     @Override
     public List<Sign> listFirstN(int n) {
         final String stmt = "SELECT * FROM signs LIMIT ?";
-        return jdbcTemplate.query(stmt, ps -> ps.setInt(1, n), new SignMapper());
+        return jdbcTemplate.query(stmt, ps -> ps.setInt(1, n), signMapper);
     }
 
     @Override
-    public List<Sign> listWithinRadius(Coordinate center) {
-        return null;
+    public List<Sign> listWithinRadius(Coordinate center, Double radiusInKm) {
+        Double longitudeRange = center.longitudeSizeByKm(center.getLatitude(), radiusInKm);
+        Double latitudeRange = center.latitudeSizeByKm(radiusInKm);
+        final String stmt = "SELECT * FROM signs WHERE (longitude BETWEEN ? AND ?) AND (latitude BETWEEN ? AND ?)";
+        return jdbcTemplate.query(stmt, ps -> {
+            ps.setDouble(1, center.getLongitude() - longitudeRange);
+            ps.setDouble(2, center.getLongitude() + longitudeRange);
+            ps.setDouble(3, center.getLatitude() - latitudeRange);
+            ps.setDouble(4, center.getLatitude() + latitudeRange);
+        }, signMapper);
+    }
+
+    @Override
+    public List<Sign> listWithinRadiusOnDate(Coordinate center, Double radiusInKm, LocalDate localDate) {
+        Double longitudeRange = center.longitudeSizeByKm(center.getLatitude(), radiusInKm);
+        Double latitudeRange = center.latitudeSizeByKm(radiusInKm);
+        int month = localDate.getMonth().getValue();
+        int day = localDate.getDayOfMonth();
+        final String stmt = "SELECT * FROM signs " +
+                "WHERE (longitude BETWEEN ? AND ?) AND (latitude BETWEEN ? AND ?)" +
+                "AND ((start_month < ? AND end_month > ?) " +
+                "OR (start_month == ? AND start_date <= ?)" +
+                "OR (end_month == ? AND end_date >= ?))";
+        return jdbcTemplate.query(stmt, ps -> {
+            ps.setDouble(1, center.getLongitude() - longitudeRange);
+            ps.setDouble(2, center.getLongitude() + longitudeRange);
+            ps.setDouble(3, center.getLatitude() - latitudeRange);
+            ps.setDouble(4, center.getLatitude() + latitudeRange);
+            ps.setInt(5, month);
+            ps.setInt(6, month);
+            ps.setInt(7, month);
+            ps.setInt(8, day);
+            ps.setInt(9, month);
+            ps.setInt(10, day);
+        }, signMapper);
     }
 }
