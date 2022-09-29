@@ -11,12 +11,27 @@ public class Sign {
     private Double longitude;
     private Double latitude;
 
-    private String nom_arrond;
-    private String description_rpa;
-    private Integer start_month;
-    private Integer start_date;
-    private Integer end_month;
-    private Integer end_date;
+    private String nomArrond;
+    private String description;
+    private Integer startMonth;
+    private Integer startDate;
+    private Integer endMonth;
+    private Integer endDate;
+
+    public Sign() {
+    }
+
+    public Sign(Long id, Double longitude, Double latitude, String nomArrond, String description, Integer startMonth, Integer startDate, Integer endMonth, Integer endDate) {
+        this.id = id;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.nomArrond = nomArrond;
+        this.description = description;
+        this.startMonth = startMonth;
+        this.startDate = startDate;
+        this.endMonth = endMonth;
+        this.endDate = endDate;
+    }
 
     public Long getId() {
         return id;
@@ -42,52 +57,52 @@ public class Sign {
         this.latitude = latitude;
     }
 
-    public String getNom_arrond() {
-        return nom_arrond;
+    public String getNomArrond() {
+        return nomArrond;
     }
 
-    public void setNom_arrond(String nom_arrond) {
-        this.nom_arrond = nom_arrond;
+    public void setNomArrond(String nom_arrond) {
+        this.nomArrond = nom_arrond;
     }
 
-    public String getDescription_rpa() {
-        return description_rpa;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescription_rpa(String description_rpa) {
-        this.description_rpa = description_rpa;
+    public void setDescription(String description_rpa) {
+        this.description = description_rpa;
     }
 
-    public Integer getStart_month() {
-        return start_month;
+    public Integer getStartMonth() {
+        return startMonth;
     }
 
-    public void setStart_month(Integer start_month) {
-        this.start_month = start_month;
+    public void setStartMonth(Integer start_month) {
+        this.startMonth = start_month;
     }
 
-    public Integer getStart_date() {
-        return start_date;
+    public Integer getStartDate() {
+        return startDate;
     }
 
-    public void setStart_date(Integer start_date) {
-        this.start_date = start_date;
+    public void setStartDate(Integer start_date) {
+        this.startDate = start_date;
     }
 
-    public Integer getEnd_month() {
-        return end_month;
+    public Integer getEndMonth() {
+        return endMonth;
     }
 
-    public void setEnd_month(Integer end_month) {
-        this.end_month = end_month;
+    public void setEndMonth(Integer end_month) {
+        this.endMonth = end_month;
     }
 
-    public Integer getEnd_date() {
-        return end_date;
+    public Integer getEndDate() {
+        return endDate;
     }
 
-    public void setEnd_date(Integer end_date) {
-        this.end_date = end_date;
+    public void setEndDate(Integer end_date) {
+        this.endDate = end_date;
     }
 
     @Override
@@ -96,12 +111,12 @@ public class Sign {
                 "id=" + id +
                 ", longitude=" + longitude +
                 ", latitude=" + latitude +
-                ", nom_arrond='" + nom_arrond + '\'' +
-                ", description_rpa='" + description_rpa + '\'' +
-                ", start_month=" + start_month +
-                ", start_date=" + start_date +
-                ", end_month=" + end_month +
-                ", end_date=" + end_date +
+                ", nom_arrond='" + nomArrond + '\'' +
+                ", description_rpa='" + description + '\'' +
+                ", start_month=" + startMonth +
+                ", start_date=" + startDate +
+                ", end_month=" + endMonth +
+                ", end_date=" + endDate +
                 '}';
     }
 }

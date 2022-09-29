@@ -15,12 +15,12 @@ public class SignMapper implements RowMapper<Sign> {
         sign.setId(rs.getLong("id"));
         sign.setLongitude(rs.getDouble("longitude"));
         sign.setLatitude(rs.getDouble("latitude"));
-        sign.setNom_arrond(rs.getString("nom_arrond"));
-        sign.setDescription_rpa(rs.getString("description_rpa"));
-        sign.setStart_month(rs.getInt("start_month"));
-        sign.setStart_date(rs.getInt("start_date"));
-        sign.setEnd_month(rs.getInt("end_month"));
-        sign.setEnd_date(rs.getInt("end_date"));
+        sign.setNomArrond(rs.getString("nom_arrond"));
+        sign.setDescription(rs.getString("description_rpa"));
+        sign.setStartMonth(rs.getInt("start_month"));
+        sign.setStartDate(rs.getInt("start_date"));
+        sign.setEndMonth(rs.getInt("end_month"));
+        sign.setEndDate(rs.getInt("end_date"));
 
         return sign;
     }

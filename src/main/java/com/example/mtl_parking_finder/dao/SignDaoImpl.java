@@ -13,15 +13,16 @@ import java.util.List;
 @Service
 public class SignDaoImpl implements SignDao {
     private final SignMapper signMapper;
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
-    public SignDaoImpl(SignMapper signMapper) {
+    public SignDaoImpl(SignMapper signMapper, JdbcTemplate jdbcTemplate) {
         this.signMapper = signMapper;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
     public void setDataSource(DataSource dataSource) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
+        this.jdbcTemplate.setDataSource(dataSource);
     }
 
     @Override
