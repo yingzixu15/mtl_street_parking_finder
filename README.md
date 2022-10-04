@@ -29,7 +29,7 @@ The file needs to have the name `mtl_parking.db`. The scripts for creating table
 
 For the time being, you can run the Spring Boot application locally and try out the API function. 
 - `/api/signs/show-all`: list all parking signs. This will likely freeze the API as the dataset is large. 
-- '/api/signs/show-limit/{n}': list the first `n` parking signs in the DB. 
-- '/show-radius/long/{long}/lat/{lat}/distance/{dist}': list all parking signs around `(long, lat)` within distance range `dist` (in kilometers).
-- '/show-radius-on-date/long/{longStr}/lat/{latStr}/distance/{distStr}/month/{m}/day/{d}': list all parking signs 
+- `/api/signs/show-limit/{n}`: list the first `n` parking signs in the DB. 
+- `/show-radius/long/{long}/lat/{lat}/distance/{dist}`: list all parking signs around `(long, lat)` within distance range `dist` (in kilometers).
+- `/show-radius-on-date/long/{longStr}/lat/{latStr}/distance/{distStr}/month/{m}/day/{d}`: list all parking signs 
 around `(long, lat)` within distance range `dist` (in kilometers) that are valid in the month `m` on the date `d`. 
