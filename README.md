@@ -25,11 +25,15 @@ The file needs to have the name `mtl_parking.db`. The scripts for creating table
 - In the SQLite3 console, run `.read src/main/data_cleaning/create_tables.sql`. 
 - In your terminal, run `python3 src/main/data_cleaning/load_db.py` to load the DB.
 
+The DB file should be located directly under the root directory of this project. 
+
 ## API
 
-For the time being, you can run the Spring Boot application locally and try out the API function. 
-- `/api/signs/show-all`: list all parking signs. This will likely freeze the API as the dataset is large. 
-- `/api/signs/show-limit/{n}`: list the first `n` parking signs in the DB. 
-- `/show-radius/long/{long}/lat/{lat}/distance/{dist}`: list all parking signs around `(long, lat)` within distance range `dist` (in kilometers).
-- `/show-radius-on-date/long/{longStr}/lat/{latStr}/distance/{distStr}/month/{m}/day/{d}`: list all parking signs 
+To access the API, use the base URL: `mtlparkingkitten.info/api` and the following parameters.
+- `/signs/show-all`: list all parking signs. This will likely freeze the API as the dataset is large. 
+- `/signs/show-limit/{n}`: list the first `n` parking signs in the DB. 
+- `/signs/show-radius/long/{long}/lat/{lat}/distance/{dist}`: list all parking signs around `(long, lat)` within distance range `dist` (in kilometers).
+- `/signs/show-radius-on-date/long/{longStr}/lat/{latStr}/distance/{distStr}/month/{m}/day/{d}`: list all parking signs 
 around `(long, lat)` within distance range `dist` (in kilometers) that are valid in the month `m` on the date `d`. 
+
+Of course you can also run the app locally and use the API, provided you have the DB properly set up. 
